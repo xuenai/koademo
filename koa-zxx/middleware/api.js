@@ -25,7 +25,10 @@ function addMapping(router, mapping) {
     for (var url in mapping) {
         if (url.startsWith('GET ')) {
             var path = url.substring(4);
-            router.get(path, mapping[url]);
+            router.get(path, async function (ctx, next) {
+                console.log(arguments,123456);
+                await next()
+            }, mapping[url]);
             console.log(`register URL mapping: GET ${path}`);
         } else if (url.startsWith('POST ')) {
             var path = url.substring(5);
